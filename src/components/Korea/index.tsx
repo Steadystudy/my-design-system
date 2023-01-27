@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { geoMercator, geoPath, select, GeoProjection } from 'd3';
 import korea from './topoKorea.json';
 import world from './world.json';
@@ -13,6 +13,9 @@ interface KoreaProps {
 }
 
 const Korea = ({ svgWidth = 1000, svgHeight = 800 }: KoreaProps) => {
+  const projection = getProjectionAppliedScale();
+  const PathGenerator = geoPath(projection);
+  const features = getGeoJSONData();
   const svgRef = useRef<SVGSVGElement>();
 
   function getGeoJSONData() {
@@ -62,22 +65,17 @@ const Korea = ({ svgWidth = 1000, svgHeight = 800 }: KoreaProps) => {
     };
   }
 
-  useEffect(() => {
-    const features = getGeoJSONData();
-    const projection = getProjectionAppliedScale();
-    const PathGenerator = geoPath(projection);
-    select(svgRef.current)
-      .selectAll('path')
-      .data(features)
-      .join('path')
-      .attr('d', PathGenerator)
-      .attr('stroke', 'black')
-      .attr('fill', (_, i) => {
-        return colors[i % colors.length];
-      });
-  }, []);
-
-  return <svg ref={svgRef} style={{ width: svgWidth, height: svgHeight }}></svg>;
+  return (
+    <svg ref={svgRef} style={{ width: svgWidth, height: svgHeight }}>
+      {features.map((feat, idx) => {
+        return (
+          <>
+            <path style={{ fill: colors[idx % colors.length] }} d={PathGenerator(feat)}></path>
+          </>
+        );
+      })}
+    </svg>
+  );
 };
 
 export default Korea;
