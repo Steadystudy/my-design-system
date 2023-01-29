@@ -12,7 +12,7 @@ async function toJson(file: string) {
       download: true,
       skipEmptyLines: true,
       delimiter: ',',
-      complete: (results) => {
+      complete: (results: ParseResult<any>) => {
         resolve(results.data);
       },
       error(err) {
@@ -26,7 +26,7 @@ const getCSV = async (file: string) => {
   try {
     Validate(file);
     const data = await toJson(file);
-    return data;
+    return data as any;
   } catch (err) {
     console.error('Could not parse json', err);
   }
