@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { geoMercator, geoPath, select, GeoProjection } from 'd3';
+import { geoMercator, geoPath, GeoProjection } from 'd3';
 import korea from './topoKorea.json';
 import world from './world.json';
 import { feature } from 'topojson-client';
