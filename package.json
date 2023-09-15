@@ -12,7 +12,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
-    "sass": "^1.57.1",
+    "styled-components": "^6.0.8",
     "topojson": "^3.0.2"
   },
   "scripts": {
@@ -20,8 +20,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public",
+    "storybook": "storybook dev -p 6006 -s public",
+    "build-storybook": "storybook build -s public",
     "predeploy": "npm run build-storybook",
     "deploy-storybook": "gh-pages -d storybook-static"
   },
@@ -54,16 +54,15 @@
     ]
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^6.5.15",
-    "@storybook/addon-essentials": "^6.5.15",
-    "@storybook/addon-interactions": "^6.5.15",
-    "@storybook/addon-links": "^6.5.15",
-    "@storybook/builder-webpack5": "^6.5.15",
-    "@storybook/manager-webpack5": "^6.5.15",
-    "@storybook/node-logger": "^6.5.15",
-    "@storybook/preset-create-react-app": "^4.1.2",
-    "@storybook/react": "^6.5.15",
-    "@storybook/testing-library": "^0.0.13",
+    "@storybook/addon-actions": "^7.4.1",
+    "@storybook/addon-essentials": "^7.4.1",
+    "@storybook/addon-interactions": "^7.4.1",
+    "@storybook/addon-links": "^7.4.1",
+    "@storybook/node-logger": "^7.4.1",
+    "@storybook/preset-create-react-app": "^7.4.1",
+    "@storybook/react": "^7.4.1",
+    "@storybook/react-webpack5": "^7.4.1",
+    "@storybook/testing-library": "^0.2.0",
     "@types/d3": "^7.4.0",
     "@types/d3-geo": "^3.0.3",
     "@types/jest": "^29.2.5",
@@ -71,10 +70,12 @@
     "@types/papaparse": "^5.3.7",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
+    "@types/styled-components": "^5.1.27",
     "@types/topojson": "^3.2.3",
     "babel-plugin-named-exports-order": "^0.0.2",
     "gh-pages": "^5.0.0",
     "prop-types": "^15.8.1",
+    "storybook": "next",
     "typescript": "^4.9.4",
     "webpack": "^5.75.0"
   }
