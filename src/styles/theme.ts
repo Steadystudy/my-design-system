@@ -19,8 +19,9 @@ const Theme = {
   },
   fontSize: {
     large: '32px',
-    medium: '28px',
+    medium: '1rem',
     small: '0.875rem',
+    xsmall: '0.75rem',
   },
 };
 
