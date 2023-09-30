@@ -5,6 +5,10 @@ import {
   DotsWrapper,
   FadeImageWrapper,
   FadeSliderContainer,
+  ImageWrapper,
+  NextButtonWrapper,
+  PrevButtonWrapper,
+  SliderContainer,
 } from './Carousel.style';
 
 interface Image {
@@ -30,8 +34,38 @@ const Carousel = ({ width, height, images, effect = 'fade' }: CarouselProps) => 
     setTranslateX(0);
   };
 
+  const handleNextBtn = (event: MouseEvent<HTMLButtonElement>) => {
+    setActiveIndex((prev) => prev + 1);
+  };
+
+  const handlePrevBtn = (event: MouseEvent<HTMLButtonElement>) => {
+    setActiveIndex((prev) => prev - 1);
+  };
+
   return (
     <Container $width={width} $height={height}>
+      {effect === 'slide' && (
+        <>
+          <SliderContainer $activeIndex={activeIndex} $width={width} $translateX={translateX}>
+            {images.map(({ imageUrl, alt }, index) => (
+              <ImageWrapper key={index} $width={width} $height={height}>
+                <img draggable={false} src={imageUrl} alt={alt || ''} />
+              </ImageWrapper>
+            ))}
+          </SliderContainer>
+          {activeIndex !== 0 && (
+            <PrevButtonWrapper>
+              <button onClick={handlePrevBtn}>{`<`}</button>
+            </PrevButtonWrapper>
+          )}
+          {activeIndex !== images.length - 1 && (
+            <NextButtonWrapper>
+              <button onClick={handleNextBtn}>{`>`}</button>
+            </NextButtonWrapper>
+          )}
+        </>
+      )}
+
       {effect === 'fade' && (
         <>
           <FadeSliderContainer $activeIndex={activeIndex}>

@@ -51,6 +51,36 @@ export const FadeImageWrapper = styled(ImageWrapper)`
   transition: opacity 300ms ease-in-out;
 `;
 
+export const ButtonWrapper = styled.div`
+  position: absolute;
+  top: 50%;
+
+  & > button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 50%;
+    outline: 0;
+
+    :hover {
+      opacity: 1;
+      cursor: pointer;
+    }
+  }
+`;
+
+export const PrevButtonWrapper = styled(ButtonWrapper)`
+  left: 8px;
+`;
+
+export const NextButtonWrapper = styled(ButtonWrapper)`
+  right: 8px;
+`;
+
 export const DotsWrapper = styled.div<{ $activeIndex: number }>`
   position: absolute;
   display: flex;
