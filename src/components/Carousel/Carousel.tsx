@@ -21,9 +21,16 @@ export interface CarouselProps {
   height: number;
   images: Image[];
   effect?: 'fade' | 'slide';
+  showOnHover?: boolean;
 }
 
-const Carousel = ({ width, height, images, effect = 'fade' }: CarouselProps) => {
+const Carousel = ({
+  width,
+  height,
+  images,
+  effect = 'fade',
+  showOnHover = false,
+}: CarouselProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [translateX, setTranslateX] = useState(0);
 
@@ -35,7 +42,7 @@ const Carousel = ({ width, height, images, effect = 'fade' }: CarouselProps) => 
   };
 
   return (
-    <Container $width={width} $height={height}>
+    <Container $width={width} $height={height} className="image_carousel_container">
       {effect === 'slide' && (
         <>
           <SliderContainer $activeIndex={activeIndex} $width={width} $translateX={translateX}>
@@ -51,12 +58,12 @@ const Carousel = ({ width, height, images, effect = 'fade' }: CarouselProps) => 
             ))}
           </SliderContainer>
           {activeIndex !== 0 && (
-            <PrevButtonWrapper>
+            <PrevButtonWrapper $showOnHover={showOnHover}>
               <button onClick={handleSlider(activeIndex - 1)}>{`＜`}</button>
             </PrevButtonWrapper>
           )}
           {activeIndex !== images.length - 1 && (
-            <NextButtonWrapper>
+            <NextButtonWrapper $showOnHover={showOnHover}>
               <button onClick={handleSlider(activeIndex + 1)}>{`＞`}</button>
             </NextButtonWrapper>
           )}

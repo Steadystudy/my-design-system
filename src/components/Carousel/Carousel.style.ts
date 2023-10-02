@@ -10,8 +10,6 @@ export const Container = styled.div<{ $width: number; $height: number }>`
 `;
 
 export const FadeSliderContainer = styled.div<{ $activeIndex: number }>`
-  position: relative;
-
   width: 100%;
   height: 100%;
 
@@ -51,9 +49,19 @@ export const FadeImageWrapper = styled(ImageWrapper)`
   transition: opacity 300ms ease-in-out;
 `;
 
-export const ButtonWrapper = styled.div`
+export const ButtonWrapper = styled.div<{ $showOnHover?: boolean }>`
   position: absolute;
   top: 50%;
+
+  opacity: ${(props) => (props.$showOnHover ? '0' : '1')};
+
+  .image_carousel_container:hover & {
+    opacity: 0.7;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
 
   & > button {
     display: flex;
@@ -66,10 +74,7 @@ export const ButtonWrapper = styled.div`
     border-radius: 50%;
     outline: 0;
 
-    :hover {
-      opacity: 1;
-      cursor: pointer;
-    }
+    cursor: pointer;
   }
 `;
 
@@ -89,7 +94,7 @@ export const DotsWrapper = styled.div<{ $activeIndex: number }>`
   transform: translate(-50%);
   gap: 8px;
 
-  :nth-child(${(props) => props.$activeIndex + 1}) {
+  &:nth-child(${(props) => props.$activeIndex + 1}) {
     opacity: 1;
   }
 `;
