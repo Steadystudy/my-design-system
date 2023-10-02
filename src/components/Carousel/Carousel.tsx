@@ -34,14 +34,6 @@ const Carousel = ({ width, height, images, effect = 'fade' }: CarouselProps) => 
     setTranslateX(0);
   };
 
-  const handleNextBtn = (event: MouseEvent<HTMLButtonElement>) => {
-    setActiveIndex((prev) => prev + 1);
-  };
-
-  const handlePrevBtn = (event: MouseEvent<HTMLButtonElement>) => {
-    setActiveIndex((prev) => prev - 1);
-  };
-
   return (
     <Container $width={width} $height={height}>
       {effect === 'slide' && (
@@ -49,18 +41,23 @@ const Carousel = ({ width, height, images, effect = 'fade' }: CarouselProps) => 
           <SliderContainer $activeIndex={activeIndex} $width={width} $translateX={translateX}>
             {images.map(({ imageUrl, alt }, index) => (
               <ImageWrapper key={index} $width={width} $height={height}>
-                <img draggable={false} src={imageUrl} alt={alt || ''} />
+                <img
+                  draggable={false}
+                  src={imageUrl}
+                  alt={alt || ''}
+                  loading={index > 2 ? 'lazy' : undefined}
+                />
               </ImageWrapper>
             ))}
           </SliderContainer>
           {activeIndex !== 0 && (
             <PrevButtonWrapper>
-              <button onClick={handlePrevBtn}>{`<`}</button>
+              <button onClick={handleSlider(activeIndex - 1)}>{`＜`}</button>
             </PrevButtonWrapper>
           )}
           {activeIndex !== images.length - 1 && (
             <NextButtonWrapper>
-              <button onClick={handleNextBtn}>{`>`}</button>
+              <button onClick={handleSlider(activeIndex + 1)}>{`＞`}</button>
             </NextButtonWrapper>
           )}
         </>
