@@ -4,10 +4,11 @@ import {
   DotsWrapper,
   FadeImageWrapper,
   FadeSliderContainer,
-  ImageWrapper,
-  NextButtonWrapper,
-  PrevButtonWrapper,
+  SlideImageWrapper,
   SliderContainer,
+  ButtonWrapper,
+  PrevButton,
+  NextButton,
 } from './Carousel.style';
 import { useCarousel } from '../../hooks/useCarousel';
 
@@ -35,7 +36,7 @@ const Carousel = ({
   width,
   height,
   images,
-  type = 'fade',
+  type = 'slide',
   isDraggable = false,
   showOnHover = false,
 }: CarouselProps) => {
@@ -44,64 +45,48 @@ const Carousel = ({
     images.length,
   );
 
+  let ImageContainer = SliderContainer;
+  if (type === 'fade') ImageContainer = FadeSliderContainer;
+
+  let ImageWrapper = SlideImageWrapper;
+  if (type === 'fade') ImageWrapper = FadeImageWrapper;
+
   return (
     <Container $width={width} $height={height} className="image_carousel_container">
+      <ImageContainer
+        ref={slideRef}
+        onMouseDown={isDraggable ? handleSliderMouseDown : undefined}
+        $activeIndex={activeIndex}
+        $width={width}
+        $translateX={translateX}
+      >
+        {images.map(({ imageUrl, alt }, index) => (
+          <ImageWrapper key={index} $width={width} $height={height}>
+            <img
+              draggable={false}
+              src={imageUrl}
+              alt={alt || ''}
+              loading={index > 2 ? 'lazy' : undefined}
+            />
+          </ImageWrapper>
+        ))}
+      </ImageContainer>
       {type === 'slide' && (
-        <>
-          <SliderContainer
-            ref={slideRef}
-            onMouseDown={isDraggable ? handleSliderMouseDown : undefined}
-            $activeIndex={activeIndex}
-            $width={width}
-            $translateX={translateX}
-          >
-            {images.map(({ imageUrl, alt }, index) => (
-              <ImageWrapper key={index} $width={width} $height={height}>
-                <img
-                  draggable={false}
-                  src={imageUrl}
-                  alt={alt || ''}
-                  loading={index > 2 ? 'lazy' : undefined}
-                />
-              </ImageWrapper>
-            ))}
-          </SliderContainer>
+        <ButtonWrapper $showOnHover={showOnHover}>
           {activeIndex !== 0 && (
-            <PrevButtonWrapper $showOnHover={showOnHover}>
-              <button onClick={handleSlider(activeIndex - 1)}>{`＜`}</button>
-            </PrevButtonWrapper>
+            <PrevButton onClick={handleSlider(activeIndex - 1)}>{`＜`}</PrevButton>
           )}
           {activeIndex !== images.length - 1 && (
-            <NextButtonWrapper $showOnHover={showOnHover}>
-              <button onClick={handleSlider(activeIndex + 1)}>{`＞`}</button>
-            </NextButtonWrapper>
+            <NextButton onClick={handleSlider(activeIndex + 1)}>{`＞`}</NextButton>
           )}
-        </>
+        </ButtonWrapper>
       )}
-
       {type === 'fade' && (
-        <>
-          <FadeSliderContainer
-            onMouseDown={isDraggable ? handleSliderMouseDown : undefined}
-            $activeIndex={activeIndex}
-          >
-            {images.map(({ imageUrl, alt }, index) => (
-              <FadeImageWrapper key={index} $width={width} $height={height}>
-                <img
-                  draggable={false}
-                  src={imageUrl}
-                  alt={alt || ''}
-                  loading={index > 2 ? 'lazy' : undefined}
-                />
-              </FadeImageWrapper>
-            ))}
-          </FadeSliderContainer>
-          <DotsWrapper $activeIndex={activeIndex}>
-            {Array.from({ length: images.length }, (_, index) => (
-              <Dot key={index} onClick={handleSlider(index)} />
-            ))}
-          </DotsWrapper>
-        </>
+        <DotsWrapper $activeIndex={activeIndex}>
+          {Array.from({ length: images.length }, (_, index) => (
+            <Dot key={index} onClick={handleSlider(index)} />
+          ))}
+        </DotsWrapper>
       )}
     </Container>
   );
