@@ -1,4 +1,3 @@
-import { MouseEvent, useRef, useState } from 'react';
 import {
   Container,
   Dot,
@@ -10,6 +9,7 @@ import {
   PrevButtonWrapper,
   SliderContainer,
 } from './Carousel.style';
+import { useCarousel } from '../../hooks/useCarousel';
 
 interface Image {
   imageUrl: string;
@@ -39,54 +39,10 @@ const Carousel = ({
   isDraggable = false,
   showOnHover = false,
 }: CarouselProps) => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [translateX, setTranslateX] = useState(0);
-  const slideRef = useRef<HTMLDivElement>(null);
-
-  const handleSlider = (index: number) => (event: MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-
-    setActiveIndex(index);
-    setTranslateX(0);
-  };
-
-  const limitToRange = (value: number, minValue: number, maxValue: number) => {
-    if (value < minValue) return minValue;
-
-    if (value > maxValue) return maxValue;
-
-    return value;
-  };
-
-  const handleDragChange = (offsetX: number) => {
-    setTranslateX(limitToRange(offsetX, -width, width));
-  };
-
-  const handleDragEnd = (offsetX: number) => {
-    const maxPosition = images.length - 1;
-
-    if (offsetX < -50) setActiveIndex(limitToRange(activeIndex + 1, 0, maxPosition));
-    if (offsetX > 50) setActiveIndex(limitToRange(activeIndex - 1, 0, maxPosition));
-
-    setTranslateX(0);
-  };
-
-  const handleSliderMouseDown = (clickEvent: MouseEvent<HTMLDivElement>) => {
-    const handleMouseMove = (moveEvent: globalThis.MouseEvent) => {
-      const offsetX = moveEvent.pageX - clickEvent.pageX;
-      handleDragChange(offsetX);
-    };
-
-    const handleMouseUp = (moveEvent: globalThis.MouseEvent) => {
-      const offsetX = moveEvent.pageX - clickEvent.pageX;
-      handleDragEnd(offsetX);
-
-      slideRef.current?.removeEventListener('mousemove', handleMouseMove);
-    };
-
-    slideRef.current?.addEventListener('mousemove', handleMouseMove);
-    slideRef.current?.addEventListener('mouseup', handleMouseUp, { once: true });
-  };
+  const { slideRef, activeIndex, handleSlider, handleSliderMouseDown, translateX } = useCarousel(
+    width,
+    images.length,
+  );
 
   return (
     <Container $width={width} $height={height} className="image_carousel_container">
