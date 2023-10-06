@@ -2,15 +2,8 @@ import type { Meta } from '@storybook/react';
 import Carousel, { CarouselProps } from './Carousel';
 
 export default {
-  title: 'Carousel',
+  title: 'Components/Carousel',
   component: Carousel,
-  argTypes: {
-    width: { control: 'number' },
-    height: { control: 'number' },
-    // showDots: { control: 'boolean' },
-    // showNavigationOnHover: { control: 'boolean' },
-    images: { control: false },
-  },
   args: {
     width: 250,
     height: 167,
@@ -36,13 +29,13 @@ const images = [
 ];
 
 export const DefaultSlideCarousel = ({ ...args }: CarouselProps) => {
-  return <Carousel {...args} images={images} effect="slide" />;
+  return <Carousel {...args} images={images} />;
 };
 
 export const ShowOnHoverSlideCarousel = ({ ...args }: CarouselProps) => {
-  return <Carousel {...args} images={images} effect="slide" showOnHover={true} />;
+  return <Carousel {...args} images={images} showOnHover={true} isDraggable={true} />;
 };
 
 export const FadeCarousel = ({ ...args }: CarouselProps) => {
-  return <Carousel {...args} images={images} effect="fade" />;
+  return <Carousel {...args} images={images} type="fade" />;
 };
