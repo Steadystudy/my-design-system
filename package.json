@@ -1,6 +1,8 @@
 {
   "name": "react-d3",
-  "author": "Steadystudy",
+  "author": {
+    "name": "Steadystudy"
+  },
   "homepage": "http://Steadystudy.github.io/D3_React",
   "version": "0.1.0",
   "private": true,
@@ -22,7 +24,8 @@
     "storybook": "storybook dev -p 6006 -s public",
     "build-storybook": "storybook build -s public",
     "predeploy": "npm run build-storybook",
-    "deploy-storybook": "gh-pages -d storybook-static"
+    "deploy-storybook": "gh-pages -d storybook-static",
+    "chromatic": "npx chromatic --project-token=chpt_990b9669ff52214"
   },
   "eslintConfig": {
     "extends": [
@@ -72,10 +75,13 @@
     "@types/styled-components": "^5.1.27",
     "@types/topojson": "^3.2.3",
     "babel-plugin-named-exports-order": "^0.0.2",
+    "chromatic": "^7.2.2",
     "gh-pages": "^5.0.0",
     "prop-types": "^15.8.1",
     "storybook": "next",
     "typescript": "^4.9.4",
     "webpack": "^5.75.0"
-  }
+  },
+  "readme": "ERROR: No README data found!",
+  "_id": "react-d3@0.1.0"
 }
