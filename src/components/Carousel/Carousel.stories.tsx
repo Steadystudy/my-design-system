@@ -1,17 +1,5 @@
-import type { Meta } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import Carousel, { CarouselProps } from './Carousel';
-
-export default {
-  title: 'Components/Carousel',
-  component: Carousel,
-  args: {
-    width: 250,
-    height: 167,
-    // showDots: false,
-    // showNavigationOnHover: false,
-    // isDraggable: true,
-  },
-} satisfies Meta<typeof Carousel>;
 
 const images = [
   {
@@ -28,14 +16,37 @@ const images = [
   },
 ];
 
+export default {
+  title: 'Components/Carousel',
+  component: Carousel,
+  args: {
+    width: 250,
+    height: 167,
+    images,
+    // showDots: false,
+    // showNavigationOnHover: false,
+    // isDraggable: true,
+  },
+} satisfies Meta<typeof Carousel>;
+
+type Story = StoryObj<typeof Carousel>;
+
+export const Default: Story = {
+  render: ({ width, height }) => <Carousel width={width} height={height} images={images} />,
+};
+
 export const DefaultSlideCarousel = ({ ...args }: CarouselProps) => {
-  return <Carousel {...args} images={images} />;
+  return <Carousel {...args} />;
 };
 
 export const ShowOnHoverSlideCarousel = ({ ...args }: CarouselProps) => {
-  return <Carousel {...args} images={images} showOnHover={true} isDraggable={true} />;
+  return <Carousel {...args} showOnHover={true} isDraggable={true} />;
 };
 
 export const FadeCarousel = ({ ...args }: CarouselProps) => {
-  return <Carousel {...args} images={images} type="fade" />;
+  return <Carousel {...args} type="fade" />;
+};
+
+export const AutoPlay: Story = {
+  render: (args) => <Carousel {...args} autoPlay />,
 };

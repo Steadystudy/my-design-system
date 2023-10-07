@@ -11,3 +11,5 @@ export const CALENDAR_MONTH_CHANGE = {
 } as const;
 
 export const DEFAULT_MAX_DATE_RANGE = 60;
+
+export const DEFAULT_INTERVAL_DELAY = 2000;

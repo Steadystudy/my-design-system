@@ -1,9 +1,12 @@
 import { MouseEvent, useRef, useState } from 'react';
+import { DEFAULT_INTERVAL_DELAY } from '../constants';
 
 export const useCarousel = (width: number, slideLength: number) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [translateX, setTranslateX] = useState(0);
   const slideRef = useRef<HTMLDivElement>(null);
+
+  const maxPosition = slideLength - 1;
 
   const handleSlider = (index: number) => (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
@@ -25,8 +28,6 @@ export const useCarousel = (width: number, slideLength: number) => {
   };
 
   const handleDragEnd = (offsetX: number) => {
-    const maxPosition = slideLength - 1;
-
     if (offsetX < -50) setActiveIndex(limitToRange(activeIndex + 1, 0, maxPosition));
     if (offsetX > 50) setActiveIndex(limitToRange(activeIndex - 1, 0, maxPosition));
 
@@ -50,11 +51,44 @@ export const useCarousel = (width: number, slideLength: number) => {
     slideRef.current?.addEventListener('mouseup', handleMouseUp, { once: true });
   };
 
+  let _interval = null as ReturnType<typeof setInterval>;
+
+  const stop = () => {
+    if (_interval) {
+      clearInterval(_interval);
+    }
+  };
+
+  const play = (interval: number) => {
+    if (_interval) {
+      clearInterval(_interval);
+    }
+    _interval = setInterval(() => {
+      next();
+    }, interval ?? DEFAULT_INTERVAL_DELAY);
+  };
+
+  const next = () => {
+    stop();
+    if (activeIndex === maxPosition) {
+      setActiveIndex(0);
+    } else {
+      setActiveIndex((prev) => prev + 1);
+    }
+  };
+
+  const handleAutoPlay = (autoPlay: boolean, interval?: number) => {
+    if (autoPlay) {
+      play(interval);
+    }
+  };
+
   return {
     slideRef,
     activeIndex,
     translateX,
     handleSlider,
     handleSliderMouseDown,
+    handleAutoPlay,
   };
 };

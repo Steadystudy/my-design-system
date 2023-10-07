@@ -11,6 +11,7 @@ import {
   NextButton,
 } from './Carousel.style';
 import { useCarousel } from '../../hooks/useCarousel';
+import { useEffect } from 'react';
 
 interface Image {
   imageUrl: string;
@@ -30,6 +31,8 @@ export interface CarouselProps {
   isDraggable?: boolean;
   /** Carousel 위에 마우스 올렸을 때 화살표 방향 보여줄 지 설정합니다. */
   showOnHover?: boolean;
+  /** Carousel 자동 플레이 여부를 설정합니다. */
+  autoPlay?: boolean;
 }
 
 const Carousel = ({
@@ -39,17 +42,22 @@ const Carousel = ({
   type = 'slide',
   isDraggable = false,
   showOnHover = false,
+  autoPlay = false,
 }: CarouselProps) => {
-  const { slideRef, activeIndex, handleSlider, handleSliderMouseDown, translateX } = useCarousel(
-    width,
-    images.length,
-  );
+  const { slideRef, activeIndex, handleSlider, handleSliderMouseDown, translateX, handleAutoPlay } =
+    useCarousel(width, images.length);
 
   let ImageContainer = SliderContainer;
-  if (type === 'fade') ImageContainer = FadeSliderContainer;
-
   let ImageWrapper = SlideImageWrapper;
-  if (type === 'fade') ImageWrapper = FadeImageWrapper;
+
+  if (type === 'fade') {
+    ImageContainer = FadeSliderContainer;
+    ImageWrapper = FadeImageWrapper;
+  }
+
+  useEffect(() => {
+    handleAutoPlay(autoPlay);
+  }, [autoPlay, handleAutoPlay]);
 
   return (
     <Container $width={width} $height={height} className="image_carousel_container">
