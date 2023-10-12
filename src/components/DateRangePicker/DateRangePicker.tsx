@@ -8,16 +8,22 @@ import { DateRangePickerContainer, NextButton, PastButton } from './DateRangePic
 export interface DateRangePickerProps {
   /** 오늘 이후 날짜를 막을 것인지에 대한 여부 */
   isFutureDaysRestricted?: boolean;
+
   /** 오늘 이전 날짜를 막을 것인지에 대한 여부 */
   isPastDaysRestricted?: boolean;
+
   /** 오늘 이전 달 버튼을 막을 것인지에 대한 여부 */
   isPastMonthButtonRestricted?: boolean;
+
   /** 특정 범위를 벗어나는 날짜에 대해서 선택 불가능할지에 대한 여부 */
   hasRangeRestriction?: boolean;
+
   /** 최대로 선택할 수 있는 날짜 범위 */
   maxDateRange?: number;
+
   /** 현재 선택된 날짜 범위 */
   initialSelectedDateRange?: SelectedDateRange;
+
   /** 날짜를 선택했을 때 실행할 함수 */
   onDateSelect?: CallableFunction;
 }

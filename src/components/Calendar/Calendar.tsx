@@ -14,20 +14,28 @@ import { DAYS_OF_WEEK } from '../../constants';
 export interface CalendarProps {
   /** 현재 Date */
   currentDate: Date;
+
   /** 현재 년월 정보 */
   yearMonthData: YearMonth;
+
   /** 현재 선택된 날짜 범위 */
   dateRange?: SelectedDateRange;
+
   /** 오늘 이후 날짜를 막을 것인지에 대한 여부 */
   isFutureDaysRestricted?: boolean;
+
   /** 오늘 이전 날짜를 막을 것인지에 대한 여부 */
   isPastDaysRestricted?: boolean;
+
   /** 특정 범위를 벗어나는 날짜에 대해서 선택 불가능할지에 대한 여부 */
   hasRangeRestriction?: boolean;
+
   /** 최대로 선택할 수 있는 날짜 범위 */
   maxDateRange?: number;
+
   /** 현재 선택된 날짜 */
   selectedDate?: number;
+
   /** 특정 날짜를 선택했을 때 실행할 함수 */
   onDateClick?: CallableFunction;
 }

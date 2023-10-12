@@ -21,32 +21,40 @@ interface Image {
 export interface CarouselProps {
   /** Carousel 너비를 설정합니다.*/
   width: number;
+
   /** Carousel 높이를 설정합니다.*/
   height: number;
+
   /** Carousel에 넣을 이미지들을 설정합니다.*/
   images: Image[];
+
   /** Carousel의 type을 설정합니다. */
   type?: 'fade' | 'slide';
+
   /** 드래그 여부 설정합니다. *
    *
    * @default false
    */
   isDraggable?: boolean;
+
   /** Carousel 위에 마우스 올렸을 때 화살표 방향 보여줄지 설정합니다.
    *
    * @default false
    */
   showOnHover?: boolean;
+
   /** Carousel 아래부분에 이미지 갯수만큼 dot navigation을 보여줄지 설정합니다
    *
    * @default false
    */
   showDots?: boolean;
+
   /** Carousel 화살표 방향 보여줄지 설정합니다.
    *
    * @default true
    */
   showArrow?: boolean;
+
   /** Carousel 자동 플레이 여부를 설정합니다.
    *
    * @default false
