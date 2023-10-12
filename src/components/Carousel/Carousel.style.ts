@@ -87,7 +87,13 @@ export const NextButton = styled.button`
   right: 0.5rem;
 `;
 
-export const DotsWrapper = styled.div<{ $activeIndex: number }>`
+export const DotsWrapper = styled.div<{ $activeIndex: number; $showOnHover?: boolean }>`
+  opacity: ${(props) => (props.$showOnHover ? '0' : '1')};
+
+  .image_carousel_container:hover & {
+    opacity: 1;
+  }
+
   position: absolute;
   display: flex;
   bottom: 0.5rem;
@@ -97,6 +103,12 @@ export const DotsWrapper = styled.div<{ $activeIndex: number }>`
 
   &:nth-child(${(props) => props.$activeIndex + 1}) {
     opacity: 1;
+  }
+
+  & > button {
+    &:nth-child(${(props) => props.$activeIndex + 1}) {
+      background-color: black;
+    }
   }
 `;
 
