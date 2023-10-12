@@ -27,11 +27,30 @@ export interface CarouselProps {
   images: Image[];
   /** Carousel의 type을 설정합니다. */
   type?: 'fade' | 'slide';
-  /** 드래그 여부 설정합니다. */
+  /** 드래그 여부 설정합니다. *
+   *
+   * @default false
+   */
   isDraggable?: boolean;
-  /** Carousel 위에 마우스 올렸을 때 화살표 방향 보여줄 지 설정합니다. */
+  /** Carousel 위에 마우스 올렸을 때 화살표 방향 보여줄지 설정합니다.
+   *
+   * @default false
+   */
   showOnHover?: boolean;
-  /** Carousel 자동 플레이 여부를 설정합니다. */
+  /** Carousel 아래부분에 이미지 갯수만큼 dot navigation을 보여줄지 설정합니다
+   *
+   * @default false
+   */
+  showDots?: boolean;
+  /** Carousel 화살표 방향 보여줄지 설정합니다.
+   *
+   * @default true
+   */
+  showArrow?: boolean;
+  /** Carousel 자동 플레이 여부를 설정합니다.
+   *
+   * @default false
+   */
   autoPlay?: boolean;
 }
 
@@ -42,6 +61,8 @@ const Carousel = ({
   type = 'slide',
   isDraggable = false,
   showOnHover = false,
+  showDots = false,
+  showArrow = true,
   autoPlay = false,
 }: CarouselProps) => {
   const { slideRef, activeIndex, handleSlider, handleSliderMouseDown, translateX, handleAutoPlay } =
@@ -79,7 +100,7 @@ const Carousel = ({
           </ImageWrapper>
         ))}
       </ImageContainer>
-      {type === 'slide' && (
+      {showArrow && (
         <ButtonWrapper $showOnHover={showOnHover}>
           {activeIndex !== 0 && (
             <PrevButton onClick={handleSlider(activeIndex - 1)}>{`＜`}</PrevButton>
@@ -89,8 +110,8 @@ const Carousel = ({
           )}
         </ButtonWrapper>
       )}
-      {type === 'fade' && (
-        <DotsWrapper $activeIndex={activeIndex}>
+      {showDots && (
+        <DotsWrapper $activeIndex={activeIndex} $showOnHover={showOnHover}>
           {Array.from({ length: images.length }, (_, index) => (
             <Dot key={index} onClick={handleSlider(index)} />
           ))}
