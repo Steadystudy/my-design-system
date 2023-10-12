@@ -1,18 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import Carousel, { CarouselProps } from './Carousel';
+import Carousel from './Carousel';
 
 const images = [
   {
-    imageUrl:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/La_Tour_Eiffel_vue_de_la_Tour_Saint-Jacques%2C_Paris_ao%C3%BBt_2014_%282%29.jpg/1200px-La_Tour_Eiffel_vue_de_la_Tour_Saint-Jacques%2C_Paris_ao%C3%BBt_2014_%282%29.jpg',
+    imageUrl: 'https://source.unsplash.com/random/?programming',
   },
   {
-    imageUrl:
-      'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/02/57/44/0c/filename-img-1097-jpg.jpg?w=700&h=-1&s=1',
+    imageUrl: 'https://source.unsplash.com/daily',
   },
   {
-    imageUrl:
-      'https://imageio.forbes.com/specials-images/imageserve/646b6b45d9b20ac15900fd8a/0x0.jpg?format=jpg&width=1200',
+    imageUrl: 'https://source.unsplash.com/weekly',
   },
 ];
 
@@ -23,30 +20,27 @@ export default {
     width: 250,
     height: 167,
     images,
-    // showDots: false,
-    // showNavigationOnHover: false,
-    // isDraggable: true,
   },
 } satisfies Meta<typeof Carousel>;
 
 type Story = StoryObj<typeof Carousel>;
 
 export const Default: Story = {
-  render: ({ width, height }) => <Carousel width={width} height={height} images={images} />,
+  render: (args) => <Carousel {...args} />,
 };
 
-export const DefaultSlideCarousel = ({ ...args }: CarouselProps) => {
-  return <Carousel {...args} />;
+export const ShowOnHoverCarousel: Story = {
+  render: (args) => <Carousel {...args} showOnHover />,
 };
 
-export const ShowOnHoverSlideCarousel = ({ ...args }: CarouselProps) => {
-  return <Carousel {...args} showOnHover={true} isDraggable={true} />;
+export const DotsCarousel: Story = {
+  render: (args) => <Carousel {...args} showDots showArrow={false} />,
 };
 
-export const FadeCarousel = ({ ...args }: CarouselProps) => {
-  return <Carousel {...args} type="fade" />;
+export const SlideAutoPlay: Story = {
+  render: (args) => <Carousel {...args} autoPlay showOnHover />,
 };
 
-export const AutoPlay: Story = {
-  render: (args) => <Carousel {...args} autoPlay />,
+export const FadeAutoPlay: Story = {
+  render: (args) => <Carousel {...args} autoPlay showOnHover type="fade" />,
 };
