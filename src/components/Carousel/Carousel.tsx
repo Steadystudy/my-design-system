@@ -73,8 +73,14 @@ const Carousel = ({
   showArrow = true,
   autoPlay = false,
 }: CarouselProps) => {
-  const { slideRef, activeIndex, handleSlider, handleSliderMouseDown, translateX, handleAutoPlay } =
-    useCarousel(width, images.length);
+  const {
+    slideRef,
+    activeIndex,
+    handleSliderButton,
+    handleSliderMouseDown,
+    translateX,
+    handleAutoPlay,
+  } = useCarousel(width, images.length);
 
   let ImageContainer = SliderContainer;
   let ImageWrapper = SlideImageWrapper;
@@ -111,17 +117,17 @@ const Carousel = ({
       {showArrow && (
         <ButtonWrapper $showOnHover={showOnHover}>
           {activeIndex !== 0 && (
-            <PrevButton onClick={handleSlider(activeIndex - 1)}>{`＜`}</PrevButton>
+            <PrevButton onClick={handleSliderButton(activeIndex - 1)}>{`＜`}</PrevButton>
           )}
           {activeIndex !== images.length - 1 && (
-            <NextButton onClick={handleSlider(activeIndex + 1)}>{`＞`}</NextButton>
+            <NextButton onClick={handleSliderButton(activeIndex + 1)}>{`＞`}</NextButton>
           )}
         </ButtonWrapper>
       )}
       {showDots && (
         <DotsWrapper $activeIndex={activeIndex} $showOnHover={showOnHover}>
           {Array.from({ length: images.length }, (_, index) => (
-            <Dot key={index} onClick={handleSlider(index)} />
+            <Dot key={index} onClick={handleSliderButton(index)} />
           ))}
         </DotsWrapper>
       )}

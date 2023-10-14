@@ -8,7 +8,7 @@ export const useCarousel = (width: number, slideLength: number) => {
 
   const maxPosition = slideLength - 1;
 
-  const handleSlider = (index: number) => (event: MouseEvent<HTMLButtonElement>) => {
+  const handleSliderButton = (index: number) => (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
 
     setActiveIndex(index);
@@ -51,7 +51,7 @@ export const useCarousel = (width: number, slideLength: number) => {
     slideRef.current?.addEventListener('mouseup', handleMouseUp, { once: true });
   };
 
-  let _interval = null as ReturnType<typeof setInterval>;
+  let _interval = null as unknown as ReturnType<typeof setInterval>;
 
   const stop = () => {
     if (_interval) {
@@ -59,17 +59,19 @@ export const useCarousel = (width: number, slideLength: number) => {
     }
   };
 
-  const play = (interval: number) => {
+  const play = (interval = DEFAULT_INTERVAL_DELAY) => {
     if (_interval) {
       clearInterval(_interval);
     }
+
     _interval = setInterval(() => {
       next();
-    }, interval ?? DEFAULT_INTERVAL_DELAY);
+    }, interval);
   };
 
   const next = () => {
     stop();
+
     if (activeIndex === maxPosition) {
       setActiveIndex(0);
     } else {
@@ -87,7 +89,7 @@ export const useCarousel = (width: number, slideLength: number) => {
     slideRef,
     activeIndex,
     translateX,
-    handleSlider,
+    handleSliderButton,
     handleSliderMouseDown,
     handleAutoPlay,
   };
